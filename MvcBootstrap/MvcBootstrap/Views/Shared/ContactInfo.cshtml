@@ -1,0 +1,32 @@
+﻿@model List<MvcBootstrap.Models.EntityFramwork.Contact>
+
+    <div class="contact_info">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="contact_info_container d-flex flex-lg-row flex-column justify-content-between align-items-between">
+                        @{ int count = 0;
+                            string srcString = string.Empty;
+                            }
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            srcString = "../../Templates/OneTech/images/contact_";
+                            srcString += @count;
+                            srcString += ".png";
+                            <!-- Contact Item -->
+                            <div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+                                <div class="contact_info_image"><img src="@srcString" alt=""></div>
+                                <div class="contact_info_content">
+                                    @Html.Raw(item.Content)
+                                </div>
+                            </div>
+                        }
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
