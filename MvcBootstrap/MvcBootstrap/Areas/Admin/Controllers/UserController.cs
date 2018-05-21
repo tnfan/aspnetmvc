@@ -1,5 +1,6 @@
 ﻿using MvcBootstrap.Models.DataAcessLayer;
 using MvcBootstrap.Models.EntityFramwork;
+using MvcBootstrap.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,21 @@ namespace MvcBootstrap.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         // GET: Admin/User
+        [CredentialAttribute(RoleID = "VIEW_USER")]
         public ActionResult Index()
         {
-            return View();
+            var model = new UserDAL().GetListUser();
+            return View(model);
         }
 
+        [CredentialAttribute(RoleID = "ADD_USER")]
         public ActionResult Create()
         {
             return View("");
         }
 
         [HttpPost]
+        [CredentialAttribute(RoleID ="ADD_USER")]
         public ActionResult Create(User userEF)
         {
             if(ModelState.IsValid)

@@ -62,5 +62,61 @@ namespace MvcBootstrap.Controllers
             }
             return View(user);
         }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(LoginViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var dal = new UserDAL();
+                var isUser = dal.Login(user.UserName, user.Password);
+                if (isUser == CommonConstants.ELoginSatus.IsMember || isUser == CommonConstants.ELoginSatus.IsAdmin)
+                {
+                    var userFull = dal.GetUser(user.UserName);
+                    var userSession = new UserNameAndID();
+                    userSession.ID = userFull.ID;
+                    userSession.UserName = userFull.UserName;
+                    Session.Add(CommonConstants.USER_SESSION, userSession);
+                    return RedirectToAction("Index","Home");
+                }
+                else if (isUser == CommonConstants.ELoginSatus.InvalidPassword)
+                {
+                    ModelState.AddModelError("", "Password không đúng.");
+                }
+                else if (isUser == CommonConstants.ELoginSatus.InvallidUserName)
+                {
+                    ModelState.AddModelError("", "UserName không đúng.");
+                }
+                else if (isUser == CommonConstants.ELoginSatus.NotExistUser)
+                {
+                    ModelState.AddModelError("", "Tài khoản không tồn tại.");
+                }
+                else if (isUser == CommonConstants.ELoginSatus.IsBlocked)
+                {
+                    ModelState.AddModelError("", "Tài khoản bị khóa.");
+                }
+
+            }
+            return View();
+        }
+
+
+        public ActionResult Logout()
+        {
+            Session[CommonConstants.USER_SESSION] = null;
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        [ChildActionOnly]
+        public ActionResult TopBar()
+        {
+            var userNameAndId = (UserNameAndID)Session[CommonConstants.USER_SESSION];
+            return PartialView(userNameAndId);
+        }
     }
 }

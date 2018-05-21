@@ -17,6 +17,9 @@ namespace MvcBootstrap.Models.EntityFramwork
         [StringLength(50)]
         public string Password { get; set; }
 
+        [StringLength(50)]
+        public string GroupID { get; set; }
+
         [StringLength(150)]
         public string Name { get; set; }
 
@@ -47,5 +50,7 @@ namespace MvcBootstrap.Models.EntityFramwork
 
         [StringLength(50)]
         public string Avatar { get; set; }
+
+        public bool Status { get; set; }
     }
 }

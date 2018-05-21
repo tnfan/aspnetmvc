@@ -1,0 +1,24 @@
+﻿@model MvcBootstrap.Models.ViewModel.UserNameAndID
+
+@if (Model == null)
+{
+    <div>@Html.ActionLink("Đăng ký", "Register", "User")</div>
+    <div>@Html.ActionLink("Đăng nhập", "Login", "User")</div>
+}
+else
+{
+    <div>
+        <ul class="standard_dropdown top_bar_dropdown">
+            <li>
+                <a href="#">@Model.UserName</a>
+                <ul>
+                    <li>@Html.ActionLink("Thiết lập tài khoản", "Setting", "User")</li>
+                    <li>@Html.ActionLink("Thoát", "Logout", "User")</li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+}
+
