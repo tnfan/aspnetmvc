@@ -1,0 +1,10 @@
+﻿@model List<MvcBootstrap.Models.EntityFramwork.ProductCategory>
+
+
+@*@Html.DropDownListFor(model => model., new SelectList(new string[] { "Football", "Rugby", "Horse Racing" }, Model.Type))*@
+
+    @foreach (var item in Model)
+    {
+        <option value="@item.ID">@item.Name</option>
+    }
+
